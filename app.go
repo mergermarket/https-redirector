@@ -1,9 +1,6 @@
 package main
 
-import (
-	"net/http"
-	"fmt"
-)
+import "net/http"
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	target := "https://" + r.Host + r.URL.Path
@@ -13,12 +10,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, target, http.StatusFound)
 }
 
-func healthcheckHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "OK\n")
-}
-
 func main() {
-	http.HandleFunc("/https-redirector-healthcheck", healthcheckHandler)
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":80", nil)
 }
