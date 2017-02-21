@@ -2,16 +2,15 @@ package main
 
 import "net/http"
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	target := "https://" + r.Host + r.URL.Path
-	if len(r.URL.RawQuery) > 0 {
-		target += "?" + r.URL.RawQuery
+func handler(res http.ResponseWriter, req *http.Request) {
+	target := "https://" + req.Host + req.URL.Path
+	if len(req.URL.RawQuery) > 0 {
+		target += "?" + req.URL.RawQuery
 	}
-	http.Redirect(w, r, target, http.StatusFound)
+	http.Redirect(res, req, target, http.StatusMovedPermanently)
 }
 
 func main() {
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":80", nil)
 }
-
