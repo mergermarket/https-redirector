@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+)
 
 func handler(res http.ResponseWriter, req *http.Request) {
 	target := "https://" + req.Host + req.URL.Path
@@ -12,5 +15,5 @@ func handler(res http.ResponseWriter, req *http.Request) {
 
 func main() {
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":80", nil)
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
